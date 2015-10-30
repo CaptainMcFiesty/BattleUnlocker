@@ -1,0 +1,11 @@
+# Config
+scope=identity,account,history,livemanage,modflair,modposts,mysubreddits,read
+refreshable=True
+
+# Appinfo
+app_key=none
+app_secret=none
+
+# Token
+token=None
+refresh_token=None
