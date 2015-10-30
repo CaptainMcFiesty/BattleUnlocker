@@ -3,7 +3,6 @@ import OAuth2Util
 import time
 import requests
 
-plag_names = []
 INTERVAL = 30 #minutes
 running = True
 subname =  'photoshopbattles'
