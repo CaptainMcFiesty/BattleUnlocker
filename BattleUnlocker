@@ -3,35 +3,36 @@ import OAuth2Util
 import time
 import requests
 
-INTERVAL = 30 #minutes
+plag_names = []
+INTERVAL = 10 #minutes
 running = True
+unlock = 'Unlocking' # Text for unlocking
+vote = 'Voting' # Text for voting
 subname =  'photoshopbattles'
 username ='PhotoShopBattles'
-user_agent = "Battle Unlocker by /u/Captain_McFiesty ver 0.1"
+user_agent = "Battle Unlocker by /u/Captain_McFiesty ver 0.2"
 
 r = praw.Reddit(user_agent)
 o = OAuth2Util.OAuth2Util(r)
 
 def approve_comments(all_comments):
     for comment in all_comments:
-        #print(comment.body)
         if(comment.banned_by.name == 'AutoModerator'):
             comment.approve()
-            #print('approve')
     return
 
 def check_flair(submission):
-    if '| Voting' in submission.link_flair_text:
-        if '| Voting.' not in submission.link_flair_text:
-            print('Submission: %r' % submission.id)
-            print('Approving Comments')
-            submission.replace_more_comments(limit=None, threshold=0)
-            flat_comments = praw.helpers.flatten_tree(submission.comments)
-            approve_comments(flat_comments)
-            submission.set_flair(flair_text =
-                                 (submission.link_flair_text + '.'),
-                                 flair_css_class = 'green')
-            print('Changed flair')
+    if ('| ' + unlock) in submission.link_flair_text:
+        print('Submission: %r' % submission.id)
+        print('Approving Comments')
+        submission.replace_more_comments(limit=None, threshold=0)
+        flat_comments = praw.helpers.flatten_tree(submission.comments)
+        approve_comments(flat_comments)
+        ftext = submission.link_flair_text
+        submission.set_flair(flair_text =
+                             (ftext[:(len(ftext)-len(unlock))] + vote),
+                             flair_css_class = 'green')
+        print('Changed flair')
     return
         
 
