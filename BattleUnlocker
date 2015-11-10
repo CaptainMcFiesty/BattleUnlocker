@@ -4,7 +4,7 @@ import time
 import requests
 
 plag_names = []
-INTERVAL = 10 #minutes
+INTERVAL = 5 #minutes
 running = True
 unlock = 'Unlocking' # Text for unlocking
 vote = 'Voting' # Text for voting
@@ -47,10 +47,10 @@ def do_code():
 #do_code()
 
 while running:
-    print("Local time: ", time.asctime(time.localtime(time.time())))
     try:
         o.refresh()
         do_code()
+        running = False
     except KeyboardInterrupt:
         running = False
     except (praw.errors.APIException):
@@ -70,4 +70,3 @@ while running:
     except (Exception):
         print("[ERROR]: Other error")
         break
-    time.sleep(INTERVAL*60)
